@@ -1,0 +1,24 @@
+只有announce時：
+java.lang.ClassNotFoundException: PostSerializable
+	at java.net.URLClassLoader.findClass(Unknown Source) <- String  // 找，確定class名稱
+	at java.lang.ClassLoader.loadClass(Unknown Source)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Unknown Source)
+	at java.lang.ClassLoader.loadClass(Unknown Source)  // 讀
+	at java.lang.Class.forName0(Native Method)  // 
+	at java.lang.Class.forName(Unknown Source)
+	at java.io.ObjectInputStream.resolveClass(Unknown Source)
+	at java.io.ObjectInputStream.readNonProxyDesc(Unknown Source)
+	at java.io.ObjectInputStream.readClassDesc(Unknown Source)
+	at java.io.ObjectInputStream.readOrdinaryObject(Unknown Source)
+	at java.io.ObjectInputStream.readObject0(Unknown Source)
+	at java.io.ObjectInputStream.readObject(Unknown Source)
+	at announce.AnnounceModel.<init>(AnnounceModel.java:53)
+	at announce.Main.main(Main.java:9)
+
+有default package和announce時：
+Exception in thread "main" java.lang.ClassCastException: PostSerializable cannot be cast to announce.PostSerializable
+	at announce.AnnounceModel.<init>(AnnounceModel.java:53)
+	at announce.Main.main(Main.java:9)
+
+classpath皆為HW3_106403052，應該是有什麼(可能ClassLoader)找到了default package內的class，
+進而使程式確認Type不同、不能轉換，而不是單純找不到不含package name的PostSerializable
